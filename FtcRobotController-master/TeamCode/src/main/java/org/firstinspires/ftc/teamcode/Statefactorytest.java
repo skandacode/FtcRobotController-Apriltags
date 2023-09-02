@@ -59,7 +59,7 @@ public class Statefactorytest extends LinearOpMode {
                 new IMU.Parameters(
                         new RevHubOrientationOnRobot(
                                 RevHubOrientationOnRobot.LogoFacingDirection.UP,
-                                RevHubOrientationOnRobot.UsbFacingDirection.FORWARD
+                                RevHubOrientationOnRobot.UsbFacingDirection.LEFT
                         )
                 )
         );
@@ -68,12 +68,18 @@ public class Statefactorytest extends LinearOpMode {
         waitForStart(); //#######################START BUTTON PRESSED###########################
 
         stateMachine.start();
+        imu.resetYaw();
+        long lastTime=0;
 
         while (opModeIsActive()){
-            drive.driveFieldCentric(-driverOp.getLeftX(), -driverOp.getLeftY(), -driverOp.getRightX(),
-                    imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES), false);
+            //drive.driveRobotCentric(-driverOp.getLeftX(), -driverOp.getLeftY(), -driverOp.getRightX());
+            //        imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES), false);
+            double angle=imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
             stateMachine.update();
             telemetry.addData("Runtime", runtime.milliseconds());
+            double looptime=1000000000/(System.nanoTime()-lastTime);
+            lastTime=System.nanoTime();
+            telemetry.addData("Looptime", looptime);
             telemetry.update();
         }
 
