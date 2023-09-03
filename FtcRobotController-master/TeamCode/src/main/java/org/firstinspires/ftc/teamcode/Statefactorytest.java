@@ -72,9 +72,9 @@ public class Statefactorytest extends LinearOpMode {
         long lastTime=0;
 
         while (opModeIsActive()){
-            //drive.driveRobotCentric(-driverOp.getLeftX(), -driverOp.getLeftY(), -driverOp.getRightX());
-            //        imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES), false);
-            double angle=imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
+            drive.driveFieldCentric(-driverOp.getLeftX(), -driverOp.getLeftY(), -driverOp.getRightX(),
+                    imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES), false);
+
             stateMachine.update();
             telemetry.addData("Runtime", runtime.milliseconds());
             double looptime=1000000000/(System.nanoTime()-lastTime);
