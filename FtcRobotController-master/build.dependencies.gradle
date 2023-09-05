@@ -2,6 +2,8 @@ repositories {
     mavenCentral()
     google() // Needed for androidx
     maven { url = 'https://maven.brott.dev/' }
+    maven { url = 'https://jitpack.io/' }
+
     flatDir {
         dirs rootProject.file('libs')
     }
@@ -23,4 +25,5 @@ dependencies {
     implementation 'org.firstinspires.ftc:Vision:8.2.0'
 
     implementation 'com.acmerobotics.dashboard:dashboard:0.4.10'
+    implementation 'com.github.StateFactory-Dev:StateFactory:v0.2.2-beta'
 }

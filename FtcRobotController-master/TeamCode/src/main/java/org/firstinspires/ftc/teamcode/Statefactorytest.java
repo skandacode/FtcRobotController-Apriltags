@@ -1,8 +1,5 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.arcrobotics.ftclib.drivebase.MecanumDrive;
-import com.arcrobotics.ftclib.gamepad.GamepadEx;
-import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -26,16 +23,10 @@ public class Statefactorytest extends LinearOpMode {
         FLIPDEPOSIT,
         RETRACTOUTTAKE
     }
-    MecanumDrive drive;
     @Override
     public void runOpMode() throws InterruptedException {
         ElapsedTime runtime = new ElapsedTime();
-        drive=new MecanumDrive(
-                new Motor(hardwareMap, "frontleft", Motor.GoBILDA.RPM_312),
-                new Motor(hardwareMap, "frontright", Motor.GoBILDA.RPM_312),
-                new Motor(hardwareMap, "backleft", Motor.GoBILDA.RPM_312),
-                new Motor(hardwareMap, "backright", Motor.GoBILDA.RPM_312)
-        );
+
 
         StateMachine stateMachine = new StateMachineBuilder()
                 .state(States.READY)
@@ -49,9 +40,6 @@ public class Statefactorytest extends LinearOpMode {
                 .transition(()->runtime.milliseconds()>10000, States.READY)
 
                 .build();
-
-
-        GamepadEx driverOp = new GamepadEx(gamepad1);
 
         IMU imu = hardwareMap.get(IMU.class, "imu");
 
@@ -72,9 +60,6 @@ public class Statefactorytest extends LinearOpMode {
         long lastTime=0;
 
         while (opModeIsActive()){
-            drive.driveFieldCentric(-driverOp.getLeftX(), -driverOp.getLeftY(), -driverOp.getRightX(),
-                    imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES), false);
-
             stateMachine.update();
             telemetry.addData("Runtime", runtime.milliseconds());
             double looptime=1000000000/(System.nanoTime()-lastTime);
