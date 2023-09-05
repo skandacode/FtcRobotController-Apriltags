@@ -59,7 +59,7 @@ public class Statefactorytest extends LinearOpMode {
         stateMachine.start();
         imu.resetYaw();
         long lastTime=0;
-        
+
         while (opModeIsActive()){
             stateMachine.update();
             telemetry.addData("Runtime", runtime.milliseconds());
